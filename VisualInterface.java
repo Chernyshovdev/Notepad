@@ -14,9 +14,9 @@ public class VisualInterface extends JFrame {
 
 
     private static final String TITLE = "Notepad";
-    JTextArea textArea=new JTextArea();
-    private JFrame jFrame=new JFrame();
-    Notepad notepad = new Notepad(jFrame);
+    JTextArea textArea = new JTextArea();
+    private JFrame jFrame;
+    private Notepad notepad;
     private JMenuItem openButton;
     private JMenuItem saveButton;
 
@@ -38,30 +38,33 @@ public class VisualInterface extends JFrame {
     }
 
     private void setupTextArea() {
-        JScrollPane jScrollBar=new JScrollPane(textArea,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane jScrollBar = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         textArea.setLineWrap(true);
         textArea.setEditable(true);
         textArea.setBackground(Color.gray);
-        getContentPane().add(textArea);
+        getContentPane().add(jScrollBar);
     }
 
 
     private void setupMenu() {
+        jFrame = new JFrame();
+        notepad = new Notepad(jFrame);
         JMenuBar bar = new JMenuBar();
         JMenu menu = new JMenu("File");
 
-        openButton=new JMenuItem("Open");
+        openButton = new JMenuItem("Open");
         openButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            try{textArea.setText(notepad.openButton());}
-            catch (FileNotFoundException e1){
-                JOptionPane.showMessageDialog(jFrame, "Error,file not found!", " ", JOptionPane.ERROR_MESSAGE);
-            }
+                try {
+                    textArea.setText(notepad.openButton());
+                } catch (FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(jFrame, "Error,file not found!", " ", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
-        saveButton=new JMenuItem("Save");
+        saveButton = new JMenuItem("Save");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,7 +81,6 @@ public class VisualInterface extends JFrame {
         menu.add(saveButton);
         setJMenuBar(bar);
     }
-
 
 
 }
